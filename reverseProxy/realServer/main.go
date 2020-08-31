@@ -43,7 +43,10 @@ func (r *RuleServer) run() {
 
 func (r *RuleServer) HelloHandler(writer http.ResponseWriter, request *http.Request) {
 	Path := fmt.Sprintf("http://%s%s\n", r.Addr, request.URL.Path)
+	realIP := fmt.Sprintf("RemoteAddr=%s, X-Forwarded-For=%v, X-Real-IP=%v\n",
+		request.RemoteAddr, request.Header.Get("X-Forwarded-For"), request.Header.Get("X-Real-IP"))
 	_, _ = io.WriteString(writer, Path)
+	_, _ = io.WriteString(writer, realIP)
 }
 
 func (r *RuleServer) ErrorHandler(writer http.ResponseWriter, request *http.Request) {
