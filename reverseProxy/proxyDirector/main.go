@@ -37,6 +37,7 @@ func NewSingleHostReverseProxy(target *url.URL) *httputil.ReverseProxy {
 		if _, ok := req.Header["User-Agent"]; !ok {
 			req.Header.Set("User-Agent", "")
 		}
+		req.Header.Set("X-Real-Ip", "11.11.11.11")
 	}
 	modifyFunc := func(res *http.Response) error {
 		if res.StatusCode != 200 {
